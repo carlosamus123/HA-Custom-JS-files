@@ -1,3 +1,70 @@
+
+
+
+To get the Kids' Maths Dashboard up and running, follow these steps to move the file to the correct location and register it as a resource in Home Assistant.
+
+1. Upload the file to config/www/
+Home Assistant serves static files (like JavaScript) from a special folder named www. In the URL, this folder is referred to as /local/.
+
+Locate your folder: Using the "File Editor" or "VS Code" add-on in Home Assistant, navigate to your config directory.
+
+Create the folder (if it doesn't exist): If you don't see a www folder inside config, create one now.
+
+Upload the file: * Upload the kids-maths-dashboard.js file into the config/www/ folder.
+
+Tip: If you are using the File Editor add-on, click the "Upload File" icon. If you are using VS Code, you can simply drag and drop the file into the www folder.
+
+2. Register the Resource in Home Assistant
+Even though the file is in the folder, Home Assistant needs to be told to "load" it when you open your dashboard.
+
+In Home Assistant, go to Settings > Dashboards.
+
+Click the three dots (⋮) in the top right corner and select Resources.
+
+Click the + Add Resource button.
+
+Enter the following details exactly:
+
+URL: /local/kids-maths-dashboard.js
+
+Resource Type: JavaScript Module
+
+Click Create.
+
+Note: If you renamed your file to kids_math.js, make sure the URL you enter here matches the filename exactly.
+
+3. Add the Card to your Dashboard
+Now that the resource is registered, you can add the custom card to any view.
+
+Go to your Dashboard and click Edit Dashboard (pencil icon).
+
+Click + Add Card.
+
+Search for Manual (at the very bottom).
+
+Paste the following YAML configuration:
+
+YAML
+
+type: custom:kids-maths-dashboard
+openai_key_entity: input_text.kids_maths_openai_key
+internet_entity: input_boolean.kids_maths_internet
+weak_topics_entity: input_text.kids_maths_weak_topics
+cache_entity: input_text.kids_maths_question_cache
+tokens_entity: input_text.kids_maths_token_balance
+child_name: "Alex"
+child_age: 9
+school_year: "Year 4"
+maths_level: "Year 3"
+tutor_name: "Aria"
+4. Final Refresh
+Sometimes Home Assistant caches old dashboard information. If you don't see the card appearing correctly after adding it:
+
+Perform a Hard Refresh in your browser (Ctrl + F5 on Windows, or Cmd + Shift + R on Mac).
+
+Alternatively, go to Settings > System > General and click Restart (just the Home Assistant core).
+
+
 To make the Kids' Maths Dashboard work, you need to create five "Helper" entities in Home Assistant. These act as the "brain" and "memory" for the card, allowing it to store the API key, track progress, and save the child's token balance.
 
 Here is the list of helpers you need to create and the reason why each one is necessary:
